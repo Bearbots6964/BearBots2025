@@ -3,6 +3,8 @@ package frc.robot
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
 import edu.wpi.first.wpilibj.TimedRobot
+import org.ironmaple.simulation.SimulatedArena
+import org.littletonrobotics.junction.Logger
 
 class Robot : TimedRobot() {
     private var autonomousCommand: Command? = null
@@ -10,6 +12,7 @@ class Robot : TimedRobot() {
 
     override fun robotInit() {
         robotContainer = RobotContainer()
+        Logger.start()
     }
 
     override fun robotPeriodic() {
@@ -23,9 +26,9 @@ class Robot : TimedRobot() {
     override fun disabledExit() {}
 
     override fun autonomousInit() {
-        autonomousCommand = robotContainer?.autonomousCommand
-
-        autonomousCommand?.schedule()
+//        autonomousCommand = robotContainer?.autonomousCommand
+//
+//        autonomousCommand?.schedule()
     }
 
     override fun autonomousPeriodic() {}
@@ -39,6 +42,10 @@ class Robot : TimedRobot() {
     override fun teleopPeriodic() {}
 
     override fun teleopExit() {}
+
+    override fun simulationPeriodic() {
+        SimulatedArena.getInstance().simulationPeriodic()
+    }
 
     override fun testInit() {
         CommandScheduler.getInstance().cancelAll()
