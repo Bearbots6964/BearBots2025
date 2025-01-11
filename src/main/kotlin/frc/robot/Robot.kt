@@ -1,18 +1,32 @@
 package frc.robot
 
+import edu.wpi.first.hal.FRCNetComm
+import edu.wpi.first.wpilibj.PowerDistribution
+import edu.wpi.first.wpilibj.util.WPILibVersion
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
-import edu.wpi.first.wpilibj.TimedRobot
+import org.littletonrobotics.junction.LoggedRobot
 import org.ironmaple.simulation.SimulatedArena
-import org.littletonrobotics.junction.Logger
 
-class Robot : TimedRobot() {
+object Robot : LoggedRobot() {
     private var autonomousCommand: Command? = null
-    private var robotContainer: RobotContainer? = null
+
+    private val currentRobotMode: String = if(isReal()) "REAL" else "SIM"
 
     override fun robotInit() {
-        robotContainer = RobotContainer()
-        Logger.start()
+        PowerDistribution(1, PowerDistribution.ModuleType.kRev)
+
+        when(currentRobotMode){
+            "REAL" -> {
+
+            }
+            "SIM" -> {
+
+            }
+            "REPLAY" -> {
+
+            }
+        }
     }
 
     override fun robotPeriodic() {
@@ -26,9 +40,7 @@ class Robot : TimedRobot() {
     override fun disabledExit() {}
 
     override fun autonomousInit() {
-//        autonomousCommand = robotContainer?.autonomousCommand
-//
-//        autonomousCommand?.schedule()
+        //autonomousCommand = Autos.selectedAutonomousCommand
     }
 
     override fun autonomousPeriodic() {}
@@ -44,12 +56,11 @@ class Robot : TimedRobot() {
     override fun teleopExit() {}
 
     override fun simulationPeriodic() {
+        // Implement maple-sim
         SimulatedArena.getInstance().simulationPeriodic()
     }
 
-    override fun testInit() {
-        CommandScheduler.getInstance().cancelAll()
-    }
+    override fun testInit() {}
 
     override fun testPeriodic() {}
 

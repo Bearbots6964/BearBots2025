@@ -2,30 +2,31 @@ package frc.robot.commands.drive
 
 import com.ctre.phoenix6.swerve.SwerveModule
 import com.ctre.phoenix6.swerve.SwerveRequest
-import edu.wpi.first.math.util.Units
+import edu.wpi.first.math.kinematics.ChassisSpeeds
 import edu.wpi.first.wpilibj2.command.Command
-import edu.wpi.first.wpilibj2.command.Subsystem
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController
-import frc.robot.constants.TunerConstants
 import frc.robot.subsystems.drive.CommandSwerveDrivetrain
-import java.util.function.DoubleSupplier
+import frc.robot.utils.DriveInput
+import java.util.function.Supplier
 
-class JoystickDrive(joystick: CommandXboxController, // For swerve drive platform
-                    private val drivetrain: CommandSwerveDrivetrain,
-                    private val drive: SwerveRequest.FieldCentric
+class JoystickDrive(
+    private val input: DriveInput?,
+    private val drivetrain: CommandSwerveDrivetrain,
+    private val drive: SwerveRequest.FieldCentric,
+    private val maxSpeed: Double,
+    private val maxRotationalSpeed: Double
 ) : Command() {
-    private val JoystickX: Double = joystick.getRightX()
-    private val JoystickY: Double = joystick.getRightY()
-    private val JoystickOmega: Double = joystick.getLeftX()
+
 
     override fun execute() {
+        if(input == null) return
 
-        /*
-        drivetrain.defaultCommand = drivetrain.applyRequest{
-            drive.withVelocityX(-joystick.leftY * MaxSpeed.asDouble())
-                .withVelocityY(-joystick.leftX * MaxSpeed.asDouble())
-                .withRotationalRate(-joystick.rightX * MaxAngularRate.asDouble())
+        //val chassisSpeed : ChassisSpeeds = input.getJoystickChassisSpeed(maxSpeed, maxRotationalSpeed)
+
+        //Parker's way
+        drivetrain.applyRequest {
+            drive.withVelocityX(-input.getJoystickX() * maxSpeed)
+                .withVelocityY(-input.getJoystickY() * maxSpeed)
+                .withRotationalRate(-input.getJoystickX() * maxRotationalSpeed)
         }
-         */
     }
 }

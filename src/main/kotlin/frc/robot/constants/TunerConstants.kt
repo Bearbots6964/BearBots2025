@@ -1,4 +1,4 @@
-package frc.robot.constants
+package frc.robot.generated
 
 import com.ctre.phoenix6.CANBus
 import com.ctre.phoenix6.configs.*
@@ -21,14 +21,14 @@ object TunerConstants {
     // The steer motor uses any SwerveModule.SteerRequestType control request with the
     // output type specified by SwerveModuleConstants.SteerMotorClosedLoopOutput
     private val steerGains: Slot0Configs = Slot0Configs()
-        .withKP(100.0).withKI(0.0).withKD(2.0)
-        .withKS(0.2).withKV(1.5).withKA(0.0)
+        .withKP(100.0).withKI(0.0).withKD(0.5)
+        .withKS(0.1).withKV(0.0).withKA(0.0)
 
     // When using closed-loop control, the drive motor uses the control
     // output type specified by SwerveModuleConstants.DriveMotorClosedLoopOutput
     private val driveGains: Slot0Configs = Slot0Configs()
         .withKP(0.1).withKI(0.0).withKD(0.0)
-        .withKS(0.0).withKV(0.12).withKA(0.0)
+        .withKS(0.0).withKV(0.124).withKA(0.0)
 
     // The closed-loop output type to use for the steer motors;
     // This affects the PID/FF gains for the steer motors
@@ -44,7 +44,7 @@ object TunerConstants {
 
     // The stator current at which the wheels start to slip;
     // This needs to be tuned to your individual robot
-    private val kSlipCurrentA = Amps.of(53.0) // TODO originally 150
+    private val kSlipCurrentA = Amps.of(120.0) // TODO originally 150
 
     // Initial configs for the drive and steer motors and the CANcoder; these cannot be null.
     // Some configs will be overwritten; check the `with*InitialConfigs()` API documentation.
@@ -71,7 +71,7 @@ object TunerConstants {
 
     private const val kDriveGearRatio = 6.746031746031747
     private const val kSteerGearRatio = 21.428571428571427
-    private val kWheelRadius: Distance = edu.wpi.first.units.Units.Inches.of(4.0)
+    private val kWheelRadius: Distance = edu.wpi.first.units.Units.Inches.of(2.0)
 
     private const val kInvertLeftSide = false
     private const val kInvertRightSide = true
@@ -84,8 +84,8 @@ object TunerConstants {
     private const val kDriveInertia = 0.001
 
     // Simulated voltage necessary to overcome friction
-    private val kSteerFrictionVoltage: Voltage = edu.wpi.first.units.Units.Volts.of(0.25)
-    private val kDriveFrictionVoltage: Voltage = edu.wpi.first.units.Units.Volts.of(0.25)
+    private val kSteerFrictionVoltage: Voltage = edu.wpi.first.units.Units.Volts.of(0.2)
+    private val kDriveFrictionVoltage: Voltage = edu.wpi.first.units.Units.Volts.of(0.2)
 
     val DrivetrainConstants: SwerveDrivetrainConstants = SwerveDrivetrainConstants()
         .withCANBusName(kCANBus.name)
@@ -163,6 +163,7 @@ object TunerConstants {
         Units.inchesToMeters(kFrontLeftYPosInches),
         kInvertLeftSide,
         kFrontLeftSteerInvert,
+        false
     )
     private val FrontRight: SwerveModuleConstants = ConstantCreator.createModuleConstants(
         kFrontRightSteerMotorId,
@@ -175,6 +176,7 @@ object TunerConstants {
         Units.inchesToMeters(kFrontRightYPosInches),
         kInvertRightSide,
         kFrontRightSteerInvert,
+        false
     )
     private val BackLeft: SwerveModuleConstants = ConstantCreator.createModuleConstants(
         kBackLeftSteerMotorId,
@@ -187,6 +189,7 @@ object TunerConstants {
         Units.inchesToMeters(kBackLeftYPosInches),
         kInvertLeftSide,
         kBackLeftSteerInvert,
+        false
     )
     private val BackRight: SwerveModuleConstants = ConstantCreator.createModuleConstants(
         kBackRightSteerMotorId,
@@ -199,6 +202,7 @@ object TunerConstants {
         Units.inchesToMeters(kBackRightYPosInches),
         kInvertRightSide,
         kBackRightSteerInvert,
+        false
     )
 
     /**
